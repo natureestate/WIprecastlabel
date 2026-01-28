@@ -1,0 +1,29 @@
+# PDF Output (ห้าม push)
+output/
+*.pdf
+
+# Fonts (ขนาดใหญ่ - ดาวน์โหลดจาก Google Fonts)
+export/fonts/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

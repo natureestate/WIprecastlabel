@@ -1,0 +1,219 @@
+/**
+ * Lucide CSS - Styles สำหรับ Lucide Icons
+ * แทน emoji ด้วย beautiful inline icons
+ */
+
+/* =========================================
+   ICON BASE STYLES
+   ========================================= */
+
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+}
+
+/* สร้าง icon ด้วย CSS content (fallback ถ้าไม่มี SVG) */
+.icon::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+}
+
+
+/* =========================================
+   ICON SIZES
+   ========================================= */
+
+.icon-sm {
+    width: 12px;
+    height: 12px;
+    font-size: 12px;
+}
+
+.icon-md {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+
+.icon-lg {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+}
+
+
+/* =========================================
+   ICON COLORS
+   ========================================= */
+
+.icon-green::before {
+    filter: invert(60%) sepia(53%) saturate(2878%) hue-rotate(100deg) brightness(95%) contrast(80%);
+}
+
+.icon-yellow::before {
+    filter: invert(79%) sepia(61%) saturate(527%) hue-rotate(360deg) brightness(102%) contrast(96%);
+}
+
+.icon-red::before {
+    filter: invert(38%) sepia(77%) saturate(2476%) hue-rotate(336deg) brightness(95%) contrast(90%);
+}
+
+.icon-blue::before {
+    filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(200deg) brightness(98%) contrast(93%);
+}
+
+
+/* =========================================
+   SPECIFIC ICON MAPPINGS
+   ========================================= */
+
+/* เราใช้ Unicode symbols เป็น fallback */
+
+.icon[data-icon="check-circle"]::before {
+    content: "✓";
+    color: #22c55e;
+    font-weight: bold;
+}
+
+.icon[data-icon="x-circle"]::before {
+    content: "✗";
+    color: #ef4444;
+    font-weight: bold;
+}
+
+.icon[data-icon="circle"].icon-green::before {
+    content: "●";
+    color: #22c55e;
+}
+
+.icon[data-icon="circle"].icon-yellow::before {
+    content: "●";
+    color: #fbbf24;
+}
+
+.icon[data-icon="circle"].icon-red::before {
+    content: "●";
+    color: #ef4444;
+}
+
+.icon[data-icon="clipboard"]::before {
+    content: "📋";
+}
+
+.icon[data-icon="mail"]::before {
+    content: "✉";
+}
+
+.icon[data-icon="smartphone"]::before {
+    content: "📱";
+}
+
+.icon[data-icon="package"]::before {
+    content: "📦";
+}
+
+.icon[data-icon="truck"]::before {
+    content: "🚚";
+}
+
+.icon[data-icon="wrench"]::before {
+    content: "🔧";
+}
+
+.icon[data-icon="lock"]::before {
+    content: "🔒";
+}
+
+.icon[data-icon="lock-open"]::before {
+    content: "🔓";
+}
+
+.icon[data-icon="crown"]::before {
+    content: "👑";
+}
+
+.icon[data-icon="user"]::before {
+    content: "👤";
+}
+
+.icon[data-icon="users"]::before {
+    content: "👥";
+}
+
+.icon[data-icon="factory"]::before {
+    content: "🏭";
+}
+
+.icon[data-icon="alert-triangle"]::before {
+    content: "⚠";
+    color: #f59e0b;
+}
+
+.icon[data-icon="info"]::before {
+    content: "ℹ";
+    color: #3b82f6;
+}
+
+.icon[data-icon="lightbulb"]::before {
+    content: "💡";
+}
+
+.icon[data-icon="clock"]::before {
+    content: "⏰";
+}
+
+.icon[data-icon="calendar"]::before {
+    content: "📅";
+}
+
+.icon[data-icon="printer"]::before {
+    content: "🖨";
+}
+
+.icon[data-icon="file-text"]::before {
+    content: "📄";
+}
+
+.icon[data-icon="bar-chart"]::before {
+    content: "📊";
+}
+
+
+/* =========================================
+   INLINE ICON IN TEXT
+   ========================================= */
+
+p .icon,
+li .icon,
+td .icon,
+h1 .icon,
+h2 .icon,
+h3 .icon {
+    margin: 0 2px;
+    vertical-align: baseline;
+}
+
+
+/* =========================================
+   ICON LISTS
+   ========================================= */
+
+/* List items ที่มี icon */
+li.icon-list {
+    list-style: none;
+    position: relative;
+    padding-left: 30px;
+}
+
+li.icon-list .icon {
+    position: absolute;
+    left: 0;
+    top: 2px;
+}

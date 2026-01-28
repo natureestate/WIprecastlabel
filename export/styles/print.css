@@ -1,0 +1,214 @@
+/**
+ * Print CSS - Page Setup, Headers, Footers, และ Page Breaks
+ * สำหรับควบคุมการพิมพ์และ PDF export
+ */
+
+/* =========================================
+   PAGE SETUP
+   ========================================= */
+
+@page {
+    size: A4;
+    margin: 25mm 20mm 25mm 20mm;
+
+    /* Counter สำหรับหมายเลขหน้า */
+    counter-increment: page;
+
+    /* Header */
+    @top-left {
+        content: "Precast Pro Labeler";
+        font-family: 'IBM Plex Sans Thai', sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+        padding-bottom: 5mm;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    @top-right {
+        content: string(section-title);
+        font-family: 'Sarabun', sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+        padding-bottom: 5mm;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    /* Footer */
+    @bottom-center {
+        content: "หน้า " counter(page);
+        font-family: 'Sarabun', sans-serif;
+        font-size: 9pt;
+        color: #64748b;
+        padding-top: 5mm;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    @bottom-right {
+        content: "© 2026 WIPrecastLabel Team";
+        font-family: 'Sarabun', sans-serif;
+        font-size: 8pt;
+        color: #94a3b8;
+        padding-top: 5mm;
+        border-top: 1px solid #e2e8f0;
+    }
+}
+
+/* ไม่ใส่ header/footer ในหน้าปก */
+@page :first {
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+
+    @bottom-center {
+        content: none;
+    }
+
+    @bottom-right {
+        content: none;
+    }
+
+    margin: 0;
+}
+
+/* ไม่ใส่ header/footer ในหน้า TOC */
+@page toc {
+    @top-left {
+        content: none;
+    }
+
+    @top-right {
+        content: none;
+    }
+}
+
+/* Page สำหรับเนื้อหาหลัก */
+@page content {
+    /* ใช้ค่า default */
+}
+
+
+/* =========================================
+   PAGE BREAKS
+   ========================================= */
+
+/* หน้าปกและสารบัญขึ้นหน้าใหม่ */
+.cover-page,
+.toc-page {
+    page-break-after: always;
+}
+
+/* Heading ระดับ 2 ขึ้นหน้าใหม่ */
+h2 {
+    page-break-before: always;
+    page-break-after: avoid;
+}
+
+/* Heading อื่นๆ ไม่ให้แยกจากเนื้อหา */
+h1,
+h3,
+h4,
+h5,
+h6 {
+    page-break-after: avoid;
+}
+
+/* ไม่ให้แยก list items */
+li {
+    page-break-inside: avoid;
+}
+
+/* ไม่ให้แยก table */
+table {
+    page-break-inside: avoid;
+}
+
+/* ไม่ให้แยก code blocks */
+pre {
+    page-break-inside: avoid;
+}
+
+/* ไม่ให้แยก image และ caption */
+figure {
+    page-break-inside: avoid;
+}
+
+/* ไม่ให้แยก blockquote */
+blockquote {
+    page-break-inside: avoid;
+}
+
+
+/* =========================================
+   ORPHANS & WIDOWS
+   ========================================= */
+
+/* ป้องกันบรรทัดเดียวค้างหน้า */
+p,
+li,
+dt,
+dd {
+    orphans: 3;
+    widows: 3;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    orphans: 3;
+    widows: 3;
+}
+
+
+/* =========================================
+   RUNNING HEADERS (Section Titles)
+   ========================================= */
+
+/* ดึง h2 มาแสดงใน header */
+h2 {
+    string-set: section-title content();
+}
+
+
+/* =========================================
+   PAGE NUMBERING
+   ========================================= */
+
+/* Reset page counter สำหรับเนื้อหาหลัก */
+.main-content {
+    counter-reset: page 1;
+}
+
+
+/* =========================================
+   PRINT OPTIMIZATION
+   ========================================= */
+
+/* ประหยัดหมึก */
+body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+/* ไม่ print background บางส่วน (ประหยัดหมึก) */
+.cover-page {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+/* Links ไม่แสดง underline ใน print */
+@media print {
+    a {
+        text-decoration: none;
+    }
+
+    a[href]:after {
+        content: none;
+    }
+}
