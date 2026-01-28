@@ -366,6 +366,11 @@ def main():
     front_cover = exporter.assets_dir / "front-cover.png"
     back_cover = exporter.assets_dir / "back-cover.png"
     
+    # Function to append timestamp to filename
+    def append_timestamp(path: Path) -> Path:
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        return path.with_name(f"{path.stem}_{timestamp}{path.suffix}")
+
     # Export ทั้งหมด
     if args.all:
         print("🚀 Export เอกสารทั้งหมด...\n")
@@ -386,9 +391,12 @@ def main():
         ]
         
         for file_info in files_to_export:
+            # Append timestamp to output path
+            output_file = append_timestamp(file_info["output"])
+            
             exporter.process_file(
                 input_file=file_info["input"],
-                output_file=file_info["output"],
+                output_file=output_file,
                 title=file_info["title"],
                 subtitle=file_info["subtitle"],
                 version=args.version,
@@ -399,9 +407,12 @@ def main():
     
     # Export ไฟล์เดียว
     elif args.input and args.output:
+        # Append timestamp to output path
+        output_file = append_timestamp(args.output)
+        
         exporter.process_file(
             input_file=args.input,
-            output_file=args.output,
+            output_file=output_file,
             title=args.title,
             subtitle=args.subtitle,
             version=args.version,
