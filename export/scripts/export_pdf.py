@@ -247,6 +247,7 @@ class PDFExporter:
             CSS(str(self.styles_dir / "print.css"), font_config=self.font_config),
             CSS(str(self.styles_dir / "diagrams.css"), font_config=self.font_config),
             CSS(str(self.styles_dir / "lucide.css"), font_config=self.font_config),
+            CSS(str(self.styles_dir / "vertical_flow.css"), font_config=self.font_config), # เพิ่ม Vertical Flow CSS
         ]
         
         # Create HTML document
@@ -267,6 +268,7 @@ class PDFExporter:
             CSS(str(self.styles_dir / "print.css"), font_config=self.font_config),
             CSS(str(self.styles_dir / "diagrams.css"), font_config=self.font_config),
             CSS(str(self.styles_dir / "lucide.css"), font_config=self.font_config),
+            CSS(str(self.styles_dir / "vertical_flow.css"), font_config=self.font_config), # เพิ่ม Vertical Flow CSS
         ]
         
         doc = HTML(string=html_content, base_url=str(self.project_root)).render(
