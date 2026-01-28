@@ -569,6 +569,20 @@ hr {
     font-size: 10pt;
 }
 
+/* Link ใน TOC */
+.toc-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    /* ใช้ flex เพื่อจัดเรียง text - dots - page */
+    width: 100%;
+    align-items: baseline;
+}
+
+.toc-link:hover {
+    color: var(--primary-blue);
+}
+
 .toc-text {
     flex-shrink: 1;
     word-break: keep-all;
@@ -577,12 +591,14 @@ hr {
 
 .toc-dots {
     flex-grow: 1;
-    border-bottom: 1px dotted var(--slate-300);
-    margin: 0 10px;
-    min-width: 20px;
+    border-bottom: 2px dotted var(--slate-300);
+    /* เพิ่มความหนา */
+    margin: 0 10px 5px 10px;
+    /* เพิ่ม margin-bottom ให้เส้นลอยขึ้นมาหน่อย */
+    min-width: 30px;
 }
 
-.toc-page-number {
+.toc-page-real {
     flex-shrink: 0;
     font-weight: 600;
     color: var(--primary-blue);

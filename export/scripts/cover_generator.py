@@ -120,15 +120,22 @@ def create_toc_html(toc_items: list) -> str:
     for item in toc_items:
         level = item.get("level", 1)
         title = item.get("title", "")
-        page = item.get("page", "")
+        heading_id = item.get("id", "")
+        # รับเลขหน้าจริงจาก item (ถ้ามี)
+        page_num = item.get("page", "") 
+        
+        # ถ้ามี ID ให้สร้าง Link
+        link_target = f"#{heading_id}" if heading_id else "#"
         
         indent_class = f"toc-level-{level}"
         
         toc_html += f"""
             <div class="toc-item {indent_class}">
-                <span class="toc-text">{title}</span>
-                <span class="toc-dots"></span>
-                <span class="toc-page-number">{page}</span>
+                <a href="{link_target}" class="toc-link">
+                    <span class="toc-text">{title}</span>
+                    <span class="toc-dots"></span>
+                    <span class="toc-page-real">{page_num}</span>
+                </a>
             </div>
         """
     

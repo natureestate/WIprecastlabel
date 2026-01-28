@@ -17,6 +17,8 @@ try:
     from markdown.extensions import tables, fenced_code, codehilite, toc
     from weasyprint import HTML, CSS
     from weasyprint.text.fonts import FontConfiguration
+    import pypdf
+    import io
 except ImportError as e:
     print(f"❌ Error: Missing required library: {e}")
     print("กรุณาติดตั้ง dependencies ด้วย: pip install -r requirements.txt")
@@ -71,7 +73,7 @@ class PDFExporter:
     
     def convert_markdown_to_html(self, markdown_text: str) -> tuple:
         """
-        แปลง markdown เป็น HTML
+        แปลง markdown เป็น HTML และสร้าง TOC พร้อม ID ที่ตรงกัน
         
         Args:
             markdown_text: เนื้อหา markdown
@@ -84,48 +86,58 @@ class PDFExporter:
             'tables',
             'fenced_code',
             'codehilite',
-            'toc',
-            'nl2br',  # New line to <br>
+            'nl2br',
             'sane_lists',
+            # เอา 'toc' ออกเพื่อจัดการ ID เองให้ชัวร์
         ])
         
-        # แปลง markdown → HTML
-        html_content = md.convert(markdown_text)
+        # แปลง markdown → HTML ดิบ
+        raw_html = md.convert(markdown_text)
         
-        # Extract TOC
-        toc_items = self._extract_toc_from_html(html_content)
+        # Process Headings: เติม ID และสร้างรายการ TOC
+        # ใช้เทคนิคนี้เพื่อการันตีว่า ID ในเนื้อหากับ TOC ตรงกันแน่นอน
+        html_content, toc_items = self._inject_ids_and_extract_toc(raw_html)
         
         return html_content, toc_items
     
-    def _extract_toc_from_html(self, html: str) -> list:
+    def _inject_ids_and_extract_toc(self, html: str) -> tuple:
         """
-        ดึงรายการ TOC จาก HTML
-        
-        Args:
-            html: HTML content
-        
-        Returns:
-            รายการ TOC
+        เติม ID ให้ heading tags และดึงข้อมูลสำหรับ TOC
         """
         toc_items = []
+        counter = 0
         
-        # ค้นหา headings (h1, h2, h3)
-        heading_pattern = r'<h([1-3])[^>]*>([^<]+)</h\1>'
-        matches = re.finditer(heading_pattern, html)
-        
-        for match in matches:
-            level = int(match.group(1))
-            title = match.group(2).strip()
+        def replace_header(match):
+            nonlocal counter
+            counter += 1
             
-            # ข้าม "สารบัญ" ตัวเอง
-            if title.lower() not in ['สารบัญ', 'table of contents']:
+            level = int(match.group(1)) # capture group 1: ระดับ (1-3)
+            # group 2 คือ attributes เก่า (ทิ้งไป)
+            text_content = match.group(3) # capture group 3: เนื้อหาข้างใน
+            
+            # สร้าง ID ใหม่ที่ unique แน่นอน
+            heading_id = f"section-{counter}"
+            
+            # Clean title สำหรับแสดงในสารบัญ (ลบ html tags)
+            clean_title = re.sub(r'<[^>]+>', '', text_content).strip()
+            
+            # เพิ่มลงรายการ TOC (ข้าม heading ที่เป็น title 'สารบัญ')
+            if clean_title.lower() not in ['สารบัญ', 'table of contents']:
                 toc_items.append({
-                    "title": title,
+                    "title": clean_title,
                     "level": level,
-                    "page": "..."  # จะถูกแทนที่ด้วย page number จริงโดย CSS
+                    "id": heading_id
                 })
+            
+            # คืนค่า tag ใหม่ที่มี id ใส่เข้าไป
+            return f'<h{level} id="{heading_id}">{text_content}</h{level}>'
+
+        # Regex: <h(1-3) ... > ... </h(1-3)>
+        # flags=re.DOTALL เพื่อให้ครอบคลุมกรณี heading มีหลายบรรทัด
+        pattern = r'<h([1-3])(.*?)>(.*?)</h\1>'
+        new_html = re.sub(pattern, replace_header, html, flags=re.DOTALL)
         
-        return toc_items
+        return new_html, toc_items
     
     def create_complete_html(
         self,
@@ -237,39 +249,88 @@ class PDFExporter:
             CSS(str(self.styles_dir / "lucide.css"), font_config=self.font_config),
         ]
         
-        # สร้าง PDF
-        html = HTML(string=html_content, base_url=str(self.project_root))
-        html.write_pdf(
-            output_path,
+        # Create HTML document
+        doc = HTML(string=html_content, base_url=str(self.project_root)).render(
             stylesheets=css_files,
             font_config=self.font_config
         )
         
-        print(f"✅ Export สำเร็จ: {output_path}")
-        print(f"   ขนาดไฟล์: {output_path.stat().st_size / 1024:.1f} KB")
-    
+        # Write PDF
+        doc.write_pdf(output_path)
+        
+        return output_path
+        
+    def _export_to_pdf_bytes(self, html_content: str) -> bytes:
+        """Export PDF to bytes (for pass 1)"""
+        css_files = [
+            CSS(str(self.styles_dir / "main.css"), font_config=self.font_config),
+            CSS(str(self.styles_dir / "print.css"), font_config=self.font_config),
+            CSS(str(self.styles_dir / "diagrams.css"), font_config=self.font_config),
+            CSS(str(self.styles_dir / "lucide.css"), font_config=self.font_config),
+        ]
+        
+        doc = HTML(string=html_content, base_url=str(self.project_root)).render(
+            stylesheets=css_files,
+            font_config=self.font_config
+        )
+        
+        return doc.write_pdf()
+
+    def _extract_page_numbers_from_pdf(self, pdf_bytes: bytes) -> dict:
+        """Extract page numbers from PDF bookmarks"""
+        pdf = pypdf.PdfReader(io.BytesIO(pdf_bytes))
+        page_map = {}
+        
+        def _process_outline(outlines):
+            for item in outlines:
+                if isinstance(item, list):
+                    _process_outline(item)
+                else:
+                    # pypdf outline item: {'/Title': '...', '/Page': IndirectObject(...), ...}
+                    try:
+                        title = item.title
+                        
+                        # Get page number
+                        page_index = pdf.get_destination_page_number(item)
+                        if page_index is not None:
+                             # Page index is 0-based, display page is 1-based
+                             # แต่เราต้องการ ID, ไม่ใช่ Title. 
+                             # WeasyPrint สร้าง Named Destination จาก ID ของ Heading
+                             # แต่ pypdf outline ไม่เก็บ Named Dest. ง่ายๆ
+                             # Trick: เราจะใช้ "Title" แมพกลับไปหา ID จาก toc_items ที่เรามีอยู่แล้ว
+                             # ดังนั้นเก็บ {title: page_num} ไว้ก่อน
+                             page_map[title.strip()] = page_index + 1
+                    except Exception as e:
+                        print(f"⚠️ Warning extract outline: {e}")
+                        continue
+                        
+        if pdf.outline:
+            _process_outline(pdf.outline)
+            
+        return page_map
+
+    def _update_toc_items_with_pages(self, toc_items: list, page_map: dict):
+        """Update toc_items with page numbers from page_map"""
+        for item in toc_items:
+            title = item["title"].replace('&amp;', '&') # Decode html entity if needed
+            if title in page_map:
+                item["page"] = page_map[title]
+            else:
+                 # ลอง fuzzy matching หรือดู parent
+                 pass
+
     def process_file(
         self,
         input_file: Path,
         output_file: Path,
         title: str = None,
-        subtitle: str = "",
+        subtitle: str = None,
         version: str = "1.0",
-        author: str = "WIPrecastLabel Team",
+        author: str = "WI Precast Label Team",
         front_cover_image: Path = None,
         back_cover_image: Path = None
     ):
-        """
-        ประมวลผลไฟล์ markdown และ export เป็น PDF
-        
-        Args:
-            input_file: ไฟล์ markdown ต้นฉบับ
-            output_file: ไฟล์ PDF ปลายทาง
-            title: ชื่อเอกสาร
-            subtitle: คำอธิบาย
-            version: เวอร์ชัน
-            author: ผู้แต่ง
-        """
+        """ประมวลผลไฟล์เดียว (2-Pass Rendering)"""
         print(f"\n{'='*60}")
         print(f"📖 กำลังประมวลผล: {input_file.name}")
         print(f"{'='*60}\n")
@@ -290,13 +351,15 @@ class PDFExporter:
         print("3️⃣ ประมวลผล Mermaid diagrams...")
         markdown_text = self.mermaid_processor.process_markdown(markdown_text)
         
-        # 4. แปลง markdown → HTML
+        # 4. แปลง markdown → HTML และได้ TOC (ยังไม่มีเลขหน้า)
         print("4️⃣ แปลง markdown → HTML...")
         content_html, toc_items = self.convert_markdown_to_html(markdown_text)
         
-        # 5. สร้าง complete HTML
-        print("5️⃣ สร้าง HTML ฉบับสมบูรณ์...")
-        complete_html = self.create_complete_html(
+        # --- PASS 1: Generate Temporary PDF to find page numbers ---
+        print("🔄 Pass 1: คำนวณเลขหน้า...")
+        
+        # สร้าง HTML สำหรับ Pass 1 (TOC ไม่มีเลขหน้า)
+        temp_html = self.create_complete_html(
             content_html=content_html,
             toc_items=toc_items,
             title=title,
@@ -307,11 +370,44 @@ class PDFExporter:
             back_cover_image=back_cover_image
         )
         
-        # 6. Export PDF
+        try:
+            # Generate PDF Memory
+            pdf_bytes = self._export_to_pdf_bytes(temp_html)
+            
+            # Extract Page Numbers
+            page_map = self._extract_page_numbers_from_pdf(pdf_bytes)
+            print(f"   ✓ พบจุดอ้างอิง {len(page_map)} จุด")
+            
+            # Update TOC with real page numbers
+            self._update_toc_items_with_pages(toc_items, page_map)
+            
+        except Exception as e:
+            print(f"⚠️  Error calculating page numbers: {e}")
+            import traceback
+            traceback.print_exc()
+            
+        # --- PASS 2: Generate Final PDF ---
+        print("5️⃣ สร้าง HTML ฉบับสมบูรณ์ (พร้อมเลขหน้าจริง)...")
+        final_html = self.create_complete_html(
+            content_html=content_html,
+            toc_items=toc_items, # ตอนนี้มี page number ครบแล้ว
+            title=title,
+            subtitle=subtitle,
+            version=version,
+            author=author,
+            front_cover_image=front_cover_image,
+            back_cover_image=back_cover_image
+        )
+        
+        # 6. Export Final PDF
         print("6️⃣ Export PDF...")
-        self.export_to_pdf(complete_html, output_file)
+        self.export_to_pdf(final_html, output_file)
+        
+        print(f"✅ Export สำเร็จ: {output_file}")
+        print(f"   ขนาดไฟล์: {output_file.stat().st_size / 1024:.1f} KB")
         
         print(f"\n{'='*60}")
+        
         print("✨ เสร็จสมบูรณ์!")
         print(f"{'='*60}\n")
 
