@@ -101,6 +101,35 @@
     font-style: normal;
 }
 
+/* IBM Plex Mono - สำหรับ Code และ ASCII Art */
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('file:///Users/macbooknow/WIPrecastLabel/export/fonts/IBMPlexMonoThai/IBMPlexMono-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('file:///Users/macbooknow/WIPrecastLabel/export/fonts/IBMPlexMonoThai/IBMPlexMono-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('file:///Users/macbooknow/WIPrecastLabel/export/fonts/IBMPlexMonoThai/IBMPlexMono-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IBM Plex Mono';
+    src: url('file:///Users/macbooknow/WIPrecastLabel/export/fonts/IBMPlexMonoThai/IBMPlexMono-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
 
 /* =========================================
    COLOR VARIABLES
@@ -237,6 +266,49 @@ a:hover {
     text-decoration: underline;
 }
 
+/* =========================================
+   CODE BLOCKS & ASCII ART
+   ========================================= */
+
+/* Code blocks และ ASCII art diagrams */
+pre {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 8.5pt;
+    line-height: 1.35;
+    background: var(--slate-50);
+    border: 1px solid var(--slate-200);
+    border-radius: 6px;
+    padding: 16px;
+    margin: 1.5em 0;
+    overflow-x: auto;
+    white-space: pre;
+    page-break-inside: avoid;
+}
+
+code {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 9pt;
+    background: var(--slate-100);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--slate-800);
+}
+
+/* Code blocks ภายใน pre tag */
+pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+}
+
+/* ASCII art ที่มี box drawing characters */
+pre.ascii-art,
+pre:has(code) {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: 0;
+    word-spacing: 0;
+}
 
 /* =========================================
    LIST STYLES
@@ -286,6 +358,7 @@ th {
 }
 
 td {
+    font-family: 'Sarabun', 'Inter', sans-serif;
     padding: 8px 12px;
     border: 1px solid var(--slate-300);
     vertical-align: top;
@@ -472,15 +545,12 @@ hr {
     padding-bottom: 20px;
 }
 
-.toc-list {
-    /* TOC items */
-}
-
 .toc-item {
     display: flex;
     align-items: baseline;
     margin: 8px 0;
     font-size: 11pt;
+    page-break-inside: avoid;
 }
 
 .toc-level-1 {
@@ -500,7 +570,9 @@ hr {
 }
 
 .toc-text {
-    flex-shrink: 0;
+    flex-shrink: 1;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .toc-dots {
@@ -510,7 +582,7 @@ hr {
     min-width: 20px;
 }
 
-.toc-page {
+.toc-page-number {
     flex-shrink: 0;
     font-weight: 600;
     color: var(--primary-blue);

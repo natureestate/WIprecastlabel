@@ -25,6 +25,7 @@ except ImportError as e:
 # Import modules อื่นๆ
 from emoji_mapper import replace_emojis
 from cover_generator import create_cover_html, create_toc_html, create_back_cover_html
+from mermaid_processor import MermaidProcessor
 
 
 class PDFExporter:
@@ -49,6 +50,11 @@ class PDFExporter:
         
         # Font configuration สำหรับ WeasyPrint
         self.font_config = FontConfiguration()
+        
+        # Mermaid processor สำหรับแปลง diagrams
+        self.mermaid_processor = MermaidProcessor(
+            output_dir=self.assets_dir / "diagrams"
+        )
     
     def load_markdown(self, filepath: Path) -> str:
         """
@@ -280,12 +286,16 @@ class PDFExporter:
         print("2️⃣ แปลง emoji → Lucide icons...")
         markdown_text = replace_emojis(markdown_text)
         
-        # 3. แปลง markdown → HTML
-        print("3️⃣ แปลง markdown → HTML...")
+        # 3. ประมวลผล Mermaid diagrams
+        print("3️⃣ ประมวลผล Mermaid diagrams...")
+        markdown_text = self.mermaid_processor.process_markdown(markdown_text)
+        
+        # 4. แปลง markdown → HTML
+        print("4️⃣ แปลง markdown → HTML...")
         content_html, toc_items = self.convert_markdown_to_html(markdown_text)
         
-        # 4. สร้าง complete HTML
-        print("4️⃣ สร้าง HTML ฉบับสมบูรณ์...")
+        # 5. สร้าง complete HTML
+        print("5️⃣ สร้าง HTML ฉบับสมบูรณ์...")
         complete_html = self.create_complete_html(
             content_html=content_html,
             toc_items=toc_items,
@@ -297,8 +307,8 @@ class PDFExporter:
             back_cover_image=back_cover_image
         )
         
-        # 5. Export PDF
-        print("5️⃣ Export PDF...")
+        # 6. Export PDF
+        print("6️⃣ Export PDF...")
         self.export_to_pdf(complete_html, output_file)
         
         print(f"\n{'='*60}")

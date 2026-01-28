@@ -128,7 +128,7 @@ def create_toc_html(toc_items: list) -> str:
             <div class="toc-item {indent_class}">
                 <span class="toc-text">{title}</span>
                 <span class="toc-dots"></span>
-                <span class="toc-page">{page}</span>
+                <span class="toc-page-number">{page}</span>
             </div>
         """
     

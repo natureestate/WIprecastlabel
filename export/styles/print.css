@@ -101,14 +101,15 @@
     page-break-after: always;
 }
 
-/* Heading ระดับ 2 ขึ้นหน้าใหม่ */
-h2 {
+/* Heading ระดับ 2 ในเนื้อหาหลักขึ้นหน้าใหม่ */
+.main-content h2 {
     page-break-before: always;
     page-break-after: avoid;
 }
 
 /* Heading อื่นๆ ไม่ให้แยกจากเนื้อหา */
 h1,
+h2,
 h3,
 h4,
 h5,
