@@ -1,6 +1,6 @@
 /**
- * Lucide CSS - Styles สำหรับ Lucide Icons
- * แทน emoji ด้วย beautiful inline icons
+ * Lucide CSS - Styles for Lucide Icons
+ * Generated automatically. Do not edit manually.
  */
 
 /* =========================================
@@ -10,210 +10,211 @@
 .icon {
     display: inline-block;
     vertical-align: middle;
-    margin: 0 4px;
-}
-
-/* สร้าง icon ด้วย CSS content (fallback ถ้าไม่มี SVG) */
-.icon::before {
-    content: "";
-    display: inline-block;
     width: 1em;
     height: 1em;
+    margin: 0 4px;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    vertical-align: middle;
 }
-
 
 /* =========================================
    ICON SIZES
    ========================================= */
 
-.icon-sm {
-    width: 12px;
-    height: 12px;
-    font-size: 12px;
+.icon-sm { width: 12px; height: 12px; }
+.icon-md { width: 16px; height: 16px; }
+.icon-lg { width: 20px; height: 20px; }
+.icon-xl { width: 24px; height: 24px; }
+
+/* =========================================
+   ICON MAPPINGS
+   ========================================= */
+
+.icon[data-icon="alert-triangle"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/alert-triangle.svg');
 }
 
-.icon-md {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
+.icon[data-icon="bar-chart"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/bar-chart.svg');
 }
 
-.icon-lg {
-    width: 20px;
-    height: 20px;
-    font-size: 20px;
+.icon[data-icon="building"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/building.svg');
 }
 
+.icon[data-icon="building-2"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/building-2.svg');
+}
+
+.icon[data-icon="calendar"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/calendar.svg');
+}
+
+.icon[data-icon="car"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/car.svg');
+}
+
+.icon[data-icon="check-circle"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/check-circle.svg');
+}
+
+.icon[data-icon="check-square"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/check-square.svg');
+}
+
+.icon[data-icon="chevron-down"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/chevron-down.svg');
+}
+
+.icon[data-icon="chevron-left"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/chevron-left.svg');
+}
+
+.icon[data-icon="chevron-right"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/chevron-right.svg');
+}
+
+.icon[data-icon="chevron-up"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/chevron-up.svg');
+}
+
+.icon[data-icon="circle"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/circle.svg');
+}
+
+.icon[data-icon="clipboard"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/clipboard.svg');
+}
+
+.icon[data-icon="clock"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/clock.svg');
+}
+
+.icon[data-icon="crown"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/crown.svg');
+}
+
+.icon[data-icon="factory"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/factory.svg');
+}
+
+.icon[data-icon="file-text"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/file-text.svg');
+}
+
+.icon[data-icon="hammer"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/hammer.svg');
+}
+
+.icon[data-icon="info"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/info.svg');
+}
+
+.icon[data-icon="key"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/key.svg');
+}
+
+.icon[data-icon="lightbulb"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/lightbulb.svg');
+}
+
+.icon[data-icon="lock"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/lock.svg');
+}
+
+.icon[data-icon="lock-open"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/lock-open.svg');
+}
+
+.icon[data-icon="mail"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/mail.svg');
+}
+
+.icon[data-icon="map-pin"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/map-pin.svg');
+}
+
+.icon[data-icon="package"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/package.svg');
+}
+
+.icon[data-icon="paperclip"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/paperclip.svg');
+}
+
+.icon[data-icon="pause"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/pause.svg');
+}
+
+.icon[data-icon="play"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/play.svg');
+}
+
+.icon[data-icon="printer"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/printer.svg');
+}
+
+.icon[data-icon="settings"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/settings.svg');
+}
+
+.icon[data-icon="smartphone"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/smartphone.svg');
+}
+
+.icon[data-icon="square"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/square.svg');
+}
+
+.icon[data-icon="timer"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/timer.svg');
+}
+
+.icon[data-icon="trending-down"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/trending-down.svg');
+}
+
+.icon[data-icon="trending-up"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/trending-up.svg');
+}
+
+.icon[data-icon="truck"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/truck.svg');
+}
+
+.icon[data-icon="user"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/user.svg');
+}
+
+.icon[data-icon="users"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/users.svg');
+}
+
+.icon[data-icon="wrench"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/wrench.svg');
+}
+
+.icon[data-icon="x-circle"] {
+    background-image: url('file:///Users/macbooknow/WIPrecastLabel/export/assets/icons/x-circle.svg');
+}
 
 /* =========================================
    ICON COLORS
    ========================================= */
 
-.icon-green::before {
+.icon-green {
     filter: invert(60%) sepia(53%) saturate(2878%) hue-rotate(100deg) brightness(95%) contrast(80%);
 }
 
-.icon-yellow::before {
+.icon-yellow {
     filter: invert(79%) sepia(61%) saturate(527%) hue-rotate(360deg) brightness(102%) contrast(96%);
 }
 
-.icon-red::before {
+.icon-red {
     filter: invert(38%) sepia(77%) saturate(2476%) hue-rotate(336deg) brightness(95%) contrast(90%);
 }
 
-.icon-blue::before {
+.icon-blue {
     filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(200deg) brightness(98%) contrast(93%);
-}
-
-
-/* =========================================
-   SPECIFIC ICON MAPPINGS
-   ========================================= */
-
-/* เราใช้ Unicode symbols เป็น fallback */
-
-.icon[data-icon="check-circle"]::before {
-    content: "✓";
-    color: #22c55e;
-    font-weight: bold;
-}
-
-.icon[data-icon="x-circle"]::before {
-    content: "✗";
-    color: #ef4444;
-    font-weight: bold;
-}
-
-.icon[data-icon="circle"].icon-green::before {
-    content: "●";
-    color: #22c55e;
-}
-
-.icon[data-icon="circle"].icon-yellow::before {
-    content: "●";
-    color: #fbbf24;
-}
-
-.icon[data-icon="circle"].icon-red::before {
-    content: "●";
-    color: #ef4444;
-}
-
-.icon[data-icon="clipboard"]::before {
-    content: "📋";
-}
-
-.icon[data-icon="mail"]::before {
-    content: "✉";
-}
-
-.icon[data-icon="smartphone"]::before {
-    content: "📱";
-}
-
-.icon[data-icon="package"]::before {
-    content: "📦";
-}
-
-.icon[data-icon="truck"]::before {
-    content: "🚚";
-}
-
-.icon[data-icon="wrench"]::before {
-    content: "🔧";
-}
-
-.icon[data-icon="lock"]::before {
-    content: "🔒";
-}
-
-.icon[data-icon="lock-open"]::before {
-    content: "🔓";
-}
-
-.icon[data-icon="crown"]::before {
-    content: "👑";
-}
-
-.icon[data-icon="user"]::before {
-    content: "👤";
-}
-
-.icon[data-icon="users"]::before {
-    content: "👥";
-}
-
-.icon[data-icon="factory"]::before {
-    content: "🏭";
-}
-
-.icon[data-icon="alert-triangle"]::before {
-    content: "⚠";
-    color: #f59e0b;
-}
-
-.icon[data-icon="info"]::before {
-    content: "ℹ";
-    color: #3b82f6;
-}
-
-.icon[data-icon="lightbulb"]::before {
-    content: "💡";
-}
-
-.icon[data-icon="clock"]::before {
-    content: "⏰";
-}
-
-.icon[data-icon="calendar"]::before {
-    content: "📅";
-}
-
-.icon[data-icon="printer"]::before {
-    content: "🖨";
-}
-
-.icon[data-icon="file-text"]::before {
-    content: "📄";
-}
-
-.icon[data-icon="bar-chart"]::before {
-    content: "📊";
-}
-
-
-/* =========================================
-   INLINE ICON IN TEXT
-   ========================================= */
-
-p .icon,
-li .icon,
-td .icon,
-h1 .icon,
-h2 .icon,
-h3 .icon {
-    margin: 0 2px;
-    vertical-align: baseline;
-}
-
-
-/* =========================================
-   ICON LISTS
-   ========================================= */
-
-/* List items ที่มี icon */
-li.icon-list {
-    list-style: none;
-    position: relative;
-    padding-left: 30px;
-}
-
-li.icon-list .icon {
-    position: absolute;
-    left: 0;
-    top: 2px;
 }
