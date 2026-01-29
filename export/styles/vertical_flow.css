@@ -1,63 +1,82 @@
-/* Vertical Flow Chart Styling for PDF */
+/* ========================================
+   Vertical Flow Chart Styling for PDF
+   Professional Design System
+   ======================================== */
 
+/* --- Container --- */
 .flow-container {
     width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 650px;
+    margin: 30px auto;
     font-family: 'Sarabun', sans-serif;
     position: relative;
-    padding-left: 20px;
-    /* Space for timeline if needed */
+    padding: 20px 0;
 }
 
-/* เส้นเชื่อมแนวตั้งหลัก (Backbone) */
+/* เส้นเชื่อมแนวตั้งหลัก (Backbone) - ปรับให้เด่นขึ้น */
 .flow-container::before {
     content: '';
     position: absolute;
     top: 0;
     bottom: 0;
     left: 50%;
-    /* อยู่กึ่งกลาง */
-    width: 2px;
-    background-color: #cbd5e1;
-    /* slate-300 */
+    width: 3px;
+    background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 50%, #cbd5e1 100%);
     transform: translateX(-50%);
     z-index: 0;
+    border-radius: 2px;
 }
 
-/* กล่องแต่ละขั้นตอน */
+/* --- กล่องแต่ละขั้นตอน --- */
 .flow-step {
     position: relative;
     background-color: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 30px;
-    /* ระยะห่างระหว่างกล่อง */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    /* เพิ่ม spacing ระหว่างกล่อง */
+    min-height: 80px;
+    /* กำหนดความสูงขั้นต่ำ */
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.08),
+        0 2px 4px -1px rgba(0, 0, 0, 0.04);
     z-index: 1;
     break-inside: avoid;
-    /* ห้ามตัดแบ่งกล่องข้ามหน้า */
-    width: 80%;
-    /* ความกว้างกล่อง */
+    width: 85%;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    /* spacing ระหว่างองค์ประกอบภายใน */
 }
 
-/* หัวลูกศรชี้ลง */
+/* Hover effect (สำหรับ web preview) */
+.flow-step:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* หัวลูกศรชี้ลง - ปรับให้สวยขึ้น */
 .flow-step::after {
     content: '';
     position: absolute;
-    bottom: -30px;
-    /* ยื่นลงไปหาเส้น */
+    bottom: -40px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 8px solid #cbd5e1;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 12px solid #94a3b8;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
 }
 
 /* ลบลูกศรตัวสุดท้าย */
@@ -65,85 +84,146 @@
     display: none;
 }
 
-/* ลบเส้นเกินตัวสุดท้าย */
+/* ลบ margin ตัวสุดท้าย */
 .flow-step:last-child {
     margin-bottom: 0;
 }
 
-/* --- Status Colors --- */
+/* ========================================
+   Status Colors - Professional Palette
+   ======================================== */
+
+/* Admin (Indigo) */
+.step-admin {
+    border-left: 6px solid #6366f1;
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+    border-color: #c7d2fe;
+}
 
 /* Planning (Orange) */
 .step-planning {
-    border-left: 5px solid #f97316;
-    background-color: #fff7ed;
+    border-left: 6px solid #f97316;
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    border-color: #fed7aa;
 }
 
 /* QC (Purple) */
 .step-qc {
-    border-left: 5px solid #a855f7;
-    background-color: #f3e8ff;
+    border-left: 6px solid #a855f7;
+    background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+    border-color: #e9d5ff;
 }
 
 /* Warehouse (Green) */
 .step-warehouse {
-    border-left: 5px solid #22c55e;
-    background-color: #f0fdf4;
+    border-left: 6px solid #22c55e;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border-color: #bbf7d0;
 }
 
 /* Shipping (Pink) */
 .step-shipping {
-    border-left: 5px solid #ec4899;
-    background-color: #fdf2f8;
+    border-left: 6px solid #ec4899;
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    border-color: #fbcfe8;
 }
 
 /* Installation (Cyan) */
 .step-installation {
-    border-left: 5px solid #06b6d4;
-    background-color: #ecfeff;
+    border-left: 6px solid #06b6d4;
+    background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+    border-color: #a5f3fc;
 }
 
 /* Pass (Green Success) */
 .step-pass {
-    border-color: #86efac;
-    background-color: #dcfce7;
+    border: 3px solid #22c55e;
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
     color: #166534;
-    font-weight: bold;
+    font-weight: 600;
+    box-shadow:
+        0 4px 6px -1px rgba(34, 197, 94, 0.2),
+        0 2px 4px -1px rgba(34, 197, 94, 0.1);
 }
 
 /* Fail (Red Error) */
 .step-fail {
-    border-color: #fca5a5;
-    background-color: #fef2f2;
+    border: 3px solid #ef4444;
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
     color: #991b1b;
+    font-weight: 600;
+    box-shadow:
+        0 4px 6px -1px rgba(239, 68, 68, 0.2),
+        0 2px 4px -1px rgba(239, 68, 68, 0.1);
 }
 
-/* Decision Diamond (จำลองด้วยกล่องสี่เหลี่ยมมนๆ) */
+/* Decision Diamond */
 .step-decision {
-    border-radius: 20px;
-    background-color: #fff;
-    border: 2px dashed #64748b;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 3px dashed #64748b;
     font-style: italic;
+    padding: 24px 28px;
+    box-shadow:
+        0 4px 6px -1px rgba(100, 116, 139, 0.15),
+        0 2px 4px -1px rgba(100, 116, 139, 0.1);
 }
 
-/* Typography */
+/* ========================================
+   Typography - Enhanced Readability
+   ======================================== */
+
 .step-title {
-    font-weight: bold;
-    font-size: 1.1em;
-    margin-bottom: 5px;
+    font-weight: 700;
+    font-size: 1.15em;
+    line-height: 1.4;
+    margin: 0;
     display: block;
+    color: #1e293b;
+    letter-spacing: -0.01em;
 }
 
 .step-desc {
-    font-size: 0.9em;
+    font-size: 0.92em;
+    line-height: 1.5;
     color: #64748b;
+    margin: 0;
+    display: block;
+    font-weight: 400;
 }
 
 .step-meta {
     display: inline-block;
-    font-size: 0.8em;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.05);
-    margin-top: 8px;
+    font-size: 0.82em;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 0.06);
+    margin-top: 4px;
     color: #475569;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    font-size: 0.75em;
+}
+
+/* ========================================
+   Print Optimization
+   ======================================== */
+
+@media print {
+    .flow-container {
+        margin: 20px auto;
+    }
+
+    .flow-step {
+        box-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.1),
+            0 1px 2px rgba(0, 0, 0, 0.06);
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .flow-step:hover {
+        transform: none;
+    }
 }
